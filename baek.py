@@ -1,4 +1,7 @@
-x = int(input())
+n = input()
+m = input()
+sum = 0
 
-for i in range(1, x + 1):
-    print(" " * (x - i) + "*" * i)
+for i in m:
+    sum += int(i)
+print(sum)
