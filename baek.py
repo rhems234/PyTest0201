@@ -1,7 +1,3 @@
-n = input()
-m = input()
-sum = 0
+n = int(input())
 
-for i in m:
-    sum += int(i)
-print(sum)
+print(n * (n - 1))
