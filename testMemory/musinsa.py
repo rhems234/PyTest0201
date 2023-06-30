@@ -1,6 +1,13 @@
+import pymysql
 import csv
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
+
+con = pymysql.connect(
+    host="127.0.0.1", user="root", password="mysql", database="musinsa", charset="utf8"
+)
+
+cursor = con.cursor()
 
 html = urlopen("https://search.musinsa.com/category/001001")
 bsObject = BeautifulSoup(html, "html.parser")
@@ -46,4 +53,12 @@ with open(filename, "w", newline="", encoding="utf-8") as file:
     for i in range(min_length):
         writer.writerow([number[i], brand[i], name[i], price[i]])
 
-print("데이터가 성공적으로 저장되었습니다.")
+        query = (
+            "INSERT INTO ranking (number, brand, name, price) VALUES (%s, %s, %s, %s)"
+        )
+        cursor.execute(query, (number[i], brand[i], name[i], price[i]))
+
+con.commit()
+con.close()
+
+print("데이터가 저장되었습니다.")
